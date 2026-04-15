@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Midwest Music Productions LLC — Lincoln, Nebraska</title>
+<meta name="description" content="Independent music promotion company based in Lincoln, Nebraska. Booking local artists, hosting events across Lincoln, Omaha, and surrounding areas.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,700;0,900;1,700&family=Barlow:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --red: #C8102E;
+    --red-dark: #9A0B22;
+    --red-glow: rgba(200,16,46,0.15);
+    --yellow: #F0C020;
+    --black: #0D0D0D;
+    --off-black: #141414;
+    --gray-dark: #1C1C1C;
+    --gray-mid: #2A2A2A;
+    --gray-line: #333;
+    --gray-text: #888;
+    --white: #F2EDE8;
+    --font-display: 'Barlow Condensed', sans-serif;
+    --font-body: 'Barlow', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  ::selection { background: var(--red); color: #fff; }
+
+  /* ── NOISE TEXTURE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+    opacity: 0.03;
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2rem;
+    height: 60px;
+    background: rgba(13,13,13,0.95);
+    border-bottom: 1px solid var(--gray-line);
+    backdrop-filter: blur(8px);
+  }
+
+  .nav-logo {
+    display: flex; flex-direction: column; gap: 0;
+    text-decoration: none;
+  }
+  .nav-logo-name {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 18px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--red);
+    line-height: 1.1;
+  }
+  .nav-logo-sub {
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gray-text);
+    line-height: 1;
+  }
+
+  .nav-links {
+    display: flex; align-items: center; gap: 2rem;
+    list-style: none;
+  }
+  .nav-links a {
+    font-size: 11px; letter-spacing: 2.5px;
+    text-transform: uppercase; color: var(--gray-text);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--white); }
+
+  .nav-cta {
+    background: var(--red); color: #fff !important;
+    padding: 7px 18px;
+    font-size: 11px !important;
+    letter-spacing: 2px !important;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--red-dark) !important; color: #fff !important; }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 92vh;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 4rem 2rem 4rem;
+    overflow: hidden;
+  }
+
+  .hero-scan {
+    position: absolute; inset: 0;
+    background-image: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(255,255,255,0.012) 2px,
+      rgba(255,255,255,0.012) 4px
+    );
+    pointer-events: none;
+  }
+
+  .hero-grid-bg {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(var(--gray-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--gray-line) 1px, transparent 1px);
+    background-size: 60px 60px;
+    opacity: 0.15;
+    pointer-events: none;
+  }
+
+  .hero-vignette {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at center, transparent 30%, var(--black) 100%);
+    pointer-events: none;
+  }
+
+  .hero-content {
+    position: relative; z-index: 2;
+    max-width: 900px;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--red); margin-bottom: 1.5rem;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    display: block; width: 28px; height: 2px;
+    background: var(--red);
+  }
+
+  .hero-h1 {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(64px, 10vw, 120px);
+    line-height: 0.92;
+    text-transform: uppercase;
+    letter-spacing: -1px;
+    margin-bottom: 2rem;
+  }
+  .hero-h1 em {
+    font-style: normal;
+    color: var(--red);
+    -webkit-text-stroke: 0px;
+  }
+  .hero-h1 .outline {
+    -webkit-text-stroke: 1.5px var(--white);
+    color: transparent;
+  }
+
+  .hero-body {
+    font-size: 17px;
+    color: var(--gray-text);
+    max-width: 480px;
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-actions {
+    display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-block;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 14px 32px;
+    transition: all 0.2s;
+    cursor: pointer;
+    border: none;
+  }
+  .btn-red {
+    background: var(--red); color: #fff;
+  }
+  .btn-red:hover { background: var(--red-dark); }
+  .btn-ghost {
+    background: transparent;
+    color: var(--white);
+    border: 1.5px solid var(--gray-line);
+  }
+  .btn-ghost:hover { border-color: var(--white); }
+
+  .hero-corner-text {
+    position: absolute;
+    right: 2rem; bottom: 4rem;
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: clamp(80px, 15vw, 200px);
+    letter-spacing: -4px;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(200,16,46,0.2);
+    text-transform: uppercase;
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* ── FEATURED EVENT ── */
+  .feature-band {
+    position: relative;
+    background: var(--red);
+    padding: 0;
+    overflow: hidden;
+  }
+  .feature-band-inner {
+    display: flex; align-items: stretch;
+    min-height: 220px;
+  }
+  .feature-date-block {
+    background: var(--red-dark);
+    padding: 2.5rem 2.5rem;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    min-width: 160px;
+    flex-shrink: 0;
+  }
+  .feature-date-month {
+    font-family: var(--font-display);
+    font-size: 13px; letter-spacing: 4px;
+    text-transform: uppercase; color: rgba(255,255,255,0.6);
+    margin-bottom: 4px;
+  }
+  .feature-date-day {
+    font-family: var(--font-display);
+    font-weight: 900; font-size: 72px;
+    line-height: 0.9; color: #fff;
+  }
+  .feature-date-year {
+    font-size: 12px; letter-spacing: 2px;
+    color: rgba(255,255,255,0.5); margin-top: 6px;
+  }
+  .feature-content {
+    padding: 2.5rem 2.5rem;
+    display: flex; flex-direction: column; justify-content: center;
+    flex: 1;
+  }
+  .feature-tag {
+    font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
+    color: rgba(255,255,255,0.6); margin-bottom: 0.5rem;
+  }
+  .feature-title {
+    font-family: var(--font-display);
+    font-weight: 900; font-size: 52px;
+    text-transform: uppercase; line-height: 1;
+    color: #fff; margin-bottom: 1rem;
+  }
+  .feature-meta {
+    display: flex; gap: 2rem; flex-wrap: wrap;
+  }
+  .feature-meta-item {
+    display: flex; flex-direction: column; gap: 2px;
+  }
+  .feature-meta-label {
+    font-size: 9px; letter-spacing: 2px;
+    text-transform: uppercase; color: rgba(255,255,255,0.5);
+  }
+  .feature-meta-val {
+    font-size: 15px; color: rgba(255,255,255,0.95); font-weight: 500;
+  }
+  .feature-action {
+    padding: 2.5rem 2.5rem;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .btn-tickets {
+    background: #fff; color: var(--red);
+    font-family: var(--font-display);
+    font-weight: 900; font-size: 15px;
+    letter-spacing: 3px; text-transform: uppercase;
+    text-decoration: none;
+    padding: 18px 40px; display: inline-block;
+    transition: all 0.2s;
+  }
+  .btn-tickets:hover { background: var(--black); color: #fff; }
+
+  /* ── SECTIONS ── */
+  .section {
+    padding: 5rem 2rem;
+    border-bottom: 1px solid var(--gray-line);
+  }
+
+  .section-header {
+    display: flex; align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 3rem;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  .section-eyebrow {
+    font-size: 10px; letter-spacing: 4px;
+    text-transform: uppercase; color: var(--red);
+    margin-bottom: 0.4rem;
+  }
+  .section-title {
+    font-family: var(--font-display);
+    font-weight: 900; font-size: 42px;
+    text-transform: uppercase; line-height: 1;
+  }
+  .section-link {
+    font-size: 11px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--gray-text);
+    text-decoration: none;
+  }
+  .section-link:hover { color: var(--red); }
+
+  /* ── ARTISTS ── */
+  .artists-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1px;
+    background: var(--gray-line);
+    border: 1px solid var(--gray-line);
+  }
+  .artist-card {
+    background: var(--off-black);
+    padding: 1.75rem;
+    transition: background 0.2s;
+    cursor: pointer;
+  }
+  .artist-card:hover { background: var(--gray-dark); }
+  .artist-card:hover .artist-initial { background: var(--red); }
+  .artist-initial {
+    width: 44px; height: 44px;
+    background: var(--gray-mid);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display);
+    font-weight: 900; font-size: 20px;
+    color: var(--white); margin-bottom: 1rem;
+    transition: background 0.2s;
+  }
+  .artist-name {
+    font-family: var(--font-display);
+    font-weight: 700; font-size: 18px;
+    text-transform: uppercase; line-height: 1.1;
+    margin-bottom: 4px;
+  }
+  .artist-genre {
+    font-size: 11px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--gray-text);
+  }
+  .artist-card-add {
+    background: var(--off-black);
+    padding: 1.75rem;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    min-height: 140px;
+    border: 1.5px dashed var(--gray-mid);
+    cursor: pointer; transition: border-color 0.2s;
+  }
+  .artist-card-add:hover { border-color: var(--red); }
+  .artist-card-add:hover .add-icon { color: var(--red); }
+  .add-icon {
+    font-family: var(--font-display);
+    font-size: 32px; color: var(--gray-text);
+    line-height: 1; transition: color 0.2s;
+  }
+  .add-label {
+    font-size: 10px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--gray-text);
+    margin-top: 8px;
+  }
+
+  /* ── EVENTS ── */
+  .events-list {
+    display: flex; flex-direction: column; gap: 1px;
+    background: var(--gray-line);
+    border: 1px solid var(--gray-line);
+  }
+  .event-row {
+    background: var(--off-black);
+    display: grid;
+    grid-template-columns: 80px 1fr auto;
+    align-items: center; gap: 2rem;
+    padding: 1.5rem 2rem;
+    transition: background 0.2s;
+    cursor: pointer;
+  }
+  .event-row:hover { background: var(--gray-dark); }
+  .event-date {
+    text-align: center;
+    border-right: 2px solid var(--gray-line);
+    padding-right: 2rem;
+  }
+  .event-date-m {
+    font-size: 10px; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--red);
+  }
+  .event-date-d {
+    font-family: var(--font-display);
+    font-weight: 900; font-size: 40px;
+    line-height: 1; color: var(--white);
+  }
+  .event-info-name {
+    font-family: var(--font-display);
+    font-weight: 700; font-size: 22px;
+    text-transform: uppercase; margin-bottom: 4px;
+  }
+  .event-info-venue {
+    font-size: 13px; color: var(--gray-text);
+  }
+  .event-badge {
+    font-size: 9px; letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border: 1px solid var(--yellow);
+    color: var(--yellow);
+    white-space: nowrap;
+  }
+  .event-row-placeholder {
+    background: var(--off-black);
+    padding: 1.5rem 2rem;
+    display: flex; align-items: center; gap: 1rem;
+    opacity: 0.4;
+  }
+  .event-dash {
+    font-family: var(--font-display); font-weight: 900;
+    font-size: 22px; color: var(--gray-text);
+  }
+
+  /* ── ABOUT ── */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+  .about-text {
+    font-size: 16px; color: var(--gray-text);
+    line-height: 1.85;
+  }
+  .about-text p + p { margin-top: 1.25rem; }
+  .about-text strong { color: var(--white); font-weight: 500; }
+
+  .stats {
+    display: flex; flex-direction: column; gap: 0;
+    border: 1px solid var(--gray-line);
+  }
+  .stat {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--gray-line);
+    display: flex; align-items: center; gap: 1.5rem;
+  }
+  .stat:last-child { border-bottom: none; }
+  .stat-num {
+    font-family: var(--font-display);
+    font-weight: 900; font-size: 36px;
+    color: var(--red); line-height: 1;
+    min-width: 90px;
+  }
+  .stat-text { font-size: 13px; color: var(--gray-text); line-height: 1.5; }
+
+  /* ── CONTACT ── */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+  }
+  .contact-label {
+    font-size: 10px; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--gray-text);
+    margin-bottom: 6px;
+  }
+  .contact-val {
+    font-family: var(--font-display);
+    font-weight: 700; font-size: 20px;
+    color: var(--white); text-decoration: none;
+  }
+  .contact-val:hover { color: var(--red); }
+  .contact-item { margin-bottom: 2rem; }
+
+  .contact-form {
+    display: flex; flex-direction: column; gap: 1rem;
+  }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-group { display: flex; flex-direction: column; gap: 6px; }
+  .form-group label {
+    font-size: 10px; letter-spacing: 2.5px;
+    text-transform: uppercase; color: var(--gray-text);
+  }
+  .form-group input,
+  .form-group textarea,
+  .form-group select {
+    background: var(--gray-dark);
+    border: 1px solid var(--gray-line);
+    color: var(--white);
+    padding: 12px 16px;
+    font-family: var(--font-body);
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.2s;
+    -webkit-appearance: none;
+    border-radius: 0;
+  }
+  .form-group input:focus,
+  .form-group textarea:focus,
+  .form-group select:focus {
+    border-color: var(--red);
+  }
+  .form-group textarea { resize: vertical; min-height: 120px; }
+  .form-group select option { background: var(--gray-dark); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--off-black);
+    border-top: 2px solid var(--red);
+    padding: 3rem 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+  .footer-logo-name {
+    font-family: var(--font-display);
+    font-weight: 900; font-size: 20px;
+    letter-spacing: 3px; text-transform: uppercase;
+    color: var(--red); margin-bottom: 4px;
+  }
+  .footer-logo-sub {
+    font-size: 10px; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--gray-text);
+  }
+  .footer-col-title {
+    font-size: 10px; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--gray-text);
+    margin-bottom: 1rem;
+  }
+  .footer-links {
+    list-style: none; display: flex; flex-direction: column; gap: 8px;
+  }
+  .footer-links a {
+    font-size: 14px; color: var(--gray-text);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--white); }
+  .footer-legal {
+    grid-column: 1 / -1;
+    border-top: 1px solid var(--gray-line);
+    padding-top: 1.5rem;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-copy {
+    font-size: 11px; color: var(--gray-text); letter-spacing: 1px;
+  }
+
+  /* ── DIVIDER ── */
+  .ticker {
+    background: var(--red);
+    padding: 10px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .ticker-inner {
+    display: inline-flex; gap: 3rem;
+    animation: ticker 20s linear infinite;
+  }
+  .ticker-item {
+    font-family: var(--font-display);
+    font-weight: 700; font-size: 13px;
+    letter-spacing: 3px; text-transform: uppercase;
+    color: rgba(255,255,255,0.8);
+    white-space: nowrap;
+  }
+  .ticker-dot {
+    color: rgba(255,255,255,0.4);
+  }
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width: 768px) {
+    nav { padding: 0 1rem; }
+    .nav-links { display: none; }
+    .hero { padding: 3rem 1rem 3rem; }
+    .hero-corner-text { display: none; }
+    .feature-band-inner { flex-direction: column; }
+    .feature-date-block { flex-direction: row; gap: 1rem; min-width: auto; padding: 1.5rem; }
+    .feature-date-day { font-size: 48px; }
+    .feature-title { font-size: 36px; }
+    .feature-action { padding: 0 1.5rem 1.5rem; justify-content: flex-start; }
+    .section { padding: 3rem 1rem; }
+    .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+    footer { grid-template-columns: 1fr; }
+    .footer-legal { flex-direction: column; align-items: flex-start; }
+    .event-row { grid-template-columns: 60px 1fr; padding: 1rem; }
+    .event-badge { display: none; }
+    .form-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">
+    <span class="nav-logo-name">Midwest Music Productions</span>
+    <span class="nav-logo-sub">Lincoln, Nebraska — LLC</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#artists">Artists</a></li>
+    <li><a href="#events">Events</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact" class="nav-cta">Book / Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-scan"></div>
+  <div class="hero-grid-bg"></div>
+  <div class="hero-vignette"></div>
+  <div class="hero-corner-text">MMP</div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Nebraska's loudest promoter</div>
+    <h1 class="hero-h1">
+      Bringing the<br>
+      <em>underground</em><br>
+      <span class="outline">to the stage.</span>
+    </h1>
+    <p class="hero-body">Independent music promotion rooted in Lincoln, Nebraska. We book local artists, host real events, and build the scene across Lincoln, Omaha, and the surrounding region — no corporate middlemen, no BS.</p>
+    <div class="hero-actions">
+      <a href="#events" class="btn btn-red">See upcoming shows</a>
+      <a href="#contact" class="btn btn-ghost">Submit your act</a>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED EVENT -->
+<div class="feature-band">
+  <div class="feature-band-inner">
+    <div class="feature-date-block">
+      <div class="feature-date-month">Sep</div>
+      <div class="feature-date-day">26</div>
+      <div class="feature-date-year">2025</div>
+    </div>
+    <div class="feature-content">
+      <div class="feature-tag">Featured event — All ages · Outdoor · Beatrice NE</div>
+      <div class="feature-title">Punk in the Park Revival</div>
+      <div class="feature-meta">
+        <div class="feature-meta-item">
+          <span class="feature-meta-label">Location</span>
+          <span class="feature-meta-val">Beatrice, Nebraska</span>
+        </div>
+        <div class="feature-meta-item">
+          <span class="feature-meta-label">Format</span>
+          <span class="feature-meta-val">Outdoor festival</span>
+        </div>
+        <div class="feature-meta-item">
+          <span class="feature-meta-label">Ages</span>
+          <span class="feature-meta-val">All ages welcome</span>
+        </div>
+      </div>
+    </div>
+    <div class="feature-action">
+      <a href="#contact" class="btn-tickets">Get tickets</a>
+    </div>
+  </div>
+</div>
+
+<!-- TICKER -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-inner">
+    <span class="ticker-item">Lincoln NE</span><span class="ticker-dot"> · </span>
+    <span class="ticker-item">Omaha NE</span><span class="ticker-dot"> · </span>
+    <span class="ticker-item">Punk in the Park Revival</span><span class="ticker-dot"> · </span>
+    <span class="ticker-item">Local artists</span><span class="ticker-dot"> · </span>
+    <span class="ticker-item">Real shows</span><span class="ticker-dot"> · </span>
+    <span class="ticker-item">No BS</span><span class="ticker-dot"> · </span>
+    <span class="ticker-item">September 26</span><span class="ticker-dot"> · </span>
+    <span class="ticker-item">Beatrice NE</span><span class="ticker-dot"> · </span>
+    <!-- duplicate for seamless loop -->
+    <span class="ticker-item">Lincoln NE</span><span class="ticker-dot"> · </span>
+    <span class="ticker-item">Omaha NE</span><span class="ticker-dot"> · </span>
+    <span class="ticker-item">Punk in the Park Revival</span><span class="ticker-dot"> · </span>
+    <span class="ticker-item">Local artists</span><span class="ticker-dot"> · </span>
+    <span class="ticker-item">Real shows</span><span class="ticker-dot"> · </span>
+    <span class="ticker-item">No BS</span><span class="ticker-dot"> · </span>
+    <span class="ticker-item">September 26</span><span class="ticker-dot"> · </span>
+    <span class="ticker-item">Beatrice NE</span><span class="ticker-dot"> · </span>
+  </div>
+</div>
+
+<!-- ARTISTS -->
+<section class="section" id="artists">
+  <div class="section-header">
+    <div>
+      <div class="section-eyebrow">On our radar</div>
+      <h2 class="section-title">Local Artists</h2>
+    </div>
+    <a href="#contact" class="section-link">Submit your act →</a>
+  </div>
+  <div class="artists-grid">
+    <!-- Placeholder cards — replace with real artists -->
+    <div class="artist-card">
+      <div class="artist-initial">?</div>
+      <div class="artist-name">Your act here</div>
+      <div class="artist-genre">Genre · Lincoln NE</div>
+    </div>
+    <div class="artist-card">
+      <div class="artist-initial">?</div>
+      <div class="artist-name">Your act here</div>
+      <div class="artist-genre">Genre · Omaha NE</div>
+    </div>
+    <div class="artist-card">
+      <div class="artist-initial">?</div>
+      <div class="artist-name">Your act here</div>
+      <div class="artist-genre">Genre · Beatrice NE</div>
+    </div>
+    <div class="artist-card-add" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
+      <div class="add-icon">+</div>
+      <div class="add-label">Submit your act</div>
+    </div>
+  </div>
+</section>
+
+<!-- EVENTS -->
+<section class="section" id="events">
+  <div class="section-header">
+    <div>
+      <div class="section-eyebrow">Coming up</div>
+      <h2 class="section-title">Upcoming Events</h2>
+    </div>
+  </div>
+  <div class="events-list">
+    <div class="event-row">
+      <div class="event-date">
+        <div class="event-date-m">Sep</div>
+        <div class="event-date-d">26</div>
+      </div>
+      <div class="event-info">
+        <div class="event-info-name">Punk in the Park Revival</div>
+        <div class="event-info-venue">Beatrice, NE — Outdoor Stage · All ages</div>
+      </div>
+      <div class="event-badge">Featured</div>
+    </div>
+    <div class="event-row-placeholder">
+      <div class="event-dash">—</div>
+      <div style="font-size:13px; color: #555; letter-spacing:1px; text-transform:uppercase;">More shows coming — Lincoln &amp; Omaha area</div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section" id="about">
+  <div class="section-header">
+    <div>
+      <div class="section-eyebrow">Who we are</div>
+      <h2 class="section-title">About</h2>
+    </div>
+  </div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p><strong>Midwest Music Productions LLC</strong> is an independent music promotion company based in Lincoln, Nebraska. We exist for one reason: to give local artists real opportunities — real stages, real crowds, and real promotion across the Lincoln, Omaha, and surrounding region.</p>
+      <p>We don't care about industry politics. We care about the music. If you're making something worth hearing in the Midwest, we want to work with you. Whether you're booking your first show or building a following, we're here to help put you in front of the people who need to hear you.</p>
+      <p>Starting with our debut event — <strong>Punk in the Park Revival</strong> in Beatrice, NE on September 26th — we're building something worth being part of.</p>
+    </div>
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-num">LNK</div>
+        <div class="stat-text">Based in Lincoln, Nebraska — serving the entire region</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">OMA</div>
+        <div class="stat-text">Active in Omaha and surrounding communities</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">100%</div>
+        <div class="stat-text">Independent — no corporate strings, no middlemen</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">Sep 26</div>
+        <div class="stat-text">Punk in the Park Revival — Beatrice, NE — our debut event</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section" id="contact">
+  <div class="section-header">
+    <div>
+      <div class="section-eyebrow">Work with us</div>
+      <h2 class="section-title">Book / Contact</h2>
+    </div>
+  </div>
+  <div class="contact-grid">
+    <div>
+      <div class="contact-item">
+        <div class="contact-label">Email</div>
+        <a href="mailto:info@midwestmusicproductions.com" class="contact-val">info@midwestmusicproductions.com</a>
+      </div>
+      <div class="contact-item">
+        <div class="contact-label">Based in</div>
+        <div class="contact-val">Lincoln, Nebraska</div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-label">Serving</div>
+        <div class="contact-val">Lincoln · Omaha · Southeast NE</div>
+      </div>
+      <div class="contact-item" style="margin-top:2rem;">
+        <div class="contact-label" style="margin-bottom:0.75rem;">For Punk in the Park Revival tickets and info:</div>
+        <a href="mailto:punkinthepark@midwestmusicproductions.com" class="contact-val" style="font-size:16px;">punkinthepark@midwestmusicproductions.com</a>
+      </div>
+    </div>
+    <form class="contact-form" onsubmit="handleSubmit(event)">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" placeholder="Your name" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" placeholder="your@email.com" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="reason">Reason for contact</label>
+        <select id="reason">
+          <option value="">Select one</option>
+          <option value="booking">Artist booking inquiry</option>
+          <option value="tickets">Punk in the Park tickets</option>
+          <option value="venue">Venue / partnership</option>
+          <option value="press">Press / media</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="message">Message</label>
+        <textarea id="message" placeholder="Tell us about your act, your venue, or your question..." required></textarea>
+      </div>
+      <button type="submit" class="btn btn-red" style="align-self:flex-start;">Send message</button>
+      <div id="form-success" style="display:none; font-size:13px; color:#6fcf97; letter-spacing:1px; text-transform:uppercase; padding-top:0.5rem;">Message sent — we'll be in touch soon.</div>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-logo-name">Midwest Music Productions</div>
+    <div class="footer-logo-sub">LLC · Lincoln, Nebraska</div>
+  </div>
+  <div>
+    <div class="footer-col-title">Navigate</div>
+    <ul class="footer-links">
+      <li><a href="#artists">Artists</a></li>
+      <li><a href="#events">Events</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+  <div>
+    <div class="footer-col-title">Upcoming</div>
+    <ul class="footer-links">
+      <li><a href="#events">Punk in the Park Revival</a></li>
+      <li><a href="#events">Sep 26 · Beatrice, NE</a></li>
+    </ul>
+  </div>
+  <div class="footer-legal">
+    <span class="footer-copy">© 2025 Midwest Music Productions LLC — Lincoln, Nebraska. All rights reserved.</span>
+    <span class="footer-copy">Built in the Midwest, for the Midwest.</span>
+  </div>
+</footer>
+
+<script>
+function handleSubmit(e) {
+  e.preventDefault();
+  document.getElementById('form-success').style.display = 'block';
+  e.target.reset();
+  setTimeout(() => {
+    document.getElementById('form-success').style.display = 'none';
+  }, 5000);
+}
+
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+});
+</script>
+</body>
+</html>
